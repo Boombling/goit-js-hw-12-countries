@@ -1,30 +1,38 @@
 import './styles.css';
-// import countryService from './services/country.service';
-import countriesCard from './templates/countries-card.hbs'
+import countryService from './services/country.service';
+import countriesCard from './templates/countries-card.hbs';
+import getRefs from './js/get-refs';
 
-const searchRef = document.querySelector('.search');
 
-searchRef.addEventListener('input', listenInput)
-function listenInput(e) {
-    // console.log(e.currentTarget.value);
+const refs = getRefs();
+
+refs.searchRef.addEventListener('imput', onSearch);
+
+function onSearch(e) {
+    e.preventDefault();
+
+    // const form = e.currentTarget;
+    const searchQuery = refs.searchRef.value;
+
+    countryService(searchQuery)
+        .then(renderCountryCard)
+        .catch(onFetchError)
+        .finally(() => form.reset());
 }
 
-// countryService.fetchCountries()
-//     .then(response => console.log(response))
-//     .catch(error => {
-//     console.log(error);
-//     });
-//  const BASE_URL = 'https://restcountries.eu';
-fetch('https://restcountries.eu/rest/v2/name/ukrain')
-    .then(response => {
-        return response.json();
-    })
-    .then(country => {
-        console.log(country);
-        const countries = countriesCard(country);
-        console.log(countries);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+function renderCountryCard(country) {
+    const countries = countriesCard(country);
+        refs.cardContainer.innerHTML = countries;
+}
 
+function onFetchError(erro) {
+    alert('ERROR страна не найдена')
+}
+// countryService(ukrain)
+// const BASE_URL = 'https://restcountries.eu';
+// fetch(`${BASE_URL}/rest/v2/name/{name}`)
+//     .then(response => {
+//             return response.json();
+//         },
+// )
+//     .then(renderCountryCard);
