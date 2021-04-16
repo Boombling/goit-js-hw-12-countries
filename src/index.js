@@ -4,10 +4,10 @@ import countriesCard from './templates/countries-card.hbs';
 import countriesList from './templates/countries-list.hbs';
 import getRefs from './js/get-refs';
 import debounce from 'lodash.debounce';
-
+// const debounce = require('lodash.debounce');
 const refs = getRefs();
 
-refs.searchRef.addEventListener('input', onSearch);
+refs.searchRef.addEventListener('input', debounce(onSearch, 500));
 
 
 function fetchCountris(name) {
@@ -24,8 +24,8 @@ function fetchCountris(name) {
 function onSearch(e) {
     e.preventDefault();
 
-    const searchQuery = e.currentTarget.value;
-    debounceInput(searchQuery)
+    const searchQuery = refs.searchRef.value;
+    // debounceInput(searchQuery)
     fetchCountris(searchQuery)
         .then(renderCountryCard)
         .catch(onFetchError)
@@ -49,4 +49,4 @@ function onFetchError(error) {
     console.log('ERROR страна не найдена')
 }
 
-const debounceInput = debounce(onSearch, 2000);
+// const debounceInput = debounce(onSearch, 2000);
