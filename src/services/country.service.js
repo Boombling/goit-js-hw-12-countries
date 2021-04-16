@@ -17,11 +17,13 @@ const BASE_URL = 'https://restcountries.eu';
 
 function fetchCountris(name) {
     
-    return fetch(`${BASE_URL}/rest/v2/name/{name}`)
-    .then(response => {
+    return fetch(`${BASE_URL}/rest/v2/name/${name}`)
+        .then(response => {
+        if(!response.ok){
+            return onFetchError();
+        }
             return response.json();
-        },
-    );
+        })
 }
 
 export default { fetchCountris };
