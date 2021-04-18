@@ -40,7 +40,7 @@ function renderCountryCard(country) {
         const countries = countriesList(country);
         refs.cardContainer.innerHTML = countries;
         
-    if (country.langth >= 10) {
+    if (country.length >= 10) {
         return showAlert('Too many matches found. Please enter a more specific query!');
     }
     }
