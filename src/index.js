@@ -4,7 +4,7 @@ import countriesCard from './templates/countries-card.hbs';
 import countriesList from './templates/countries-list.hbs';
 import getRefs from './js/get-refs';
 import debounce from 'lodash.debounce';
-import { showAlert, showError } from './js/pnotify';
+import showAlert from './js/pnotify';
 // const debounce = require('lodash.debounce');
 const refs = getRefs();
 
@@ -38,25 +38,26 @@ function renderCountryCard(country) {
 
     if (country.length > 1) {
         const countries = countriesList(country);
-        refs.cardContainer.innerHTML = countries;    
-    
+        refs.cardContainer.innerHTML = countries;
+        
+    if (country.langth >= 10) {
+        return showAlert('Too many matches found. Please enter a more specific query!');
+    }
     }
     else {        
         const countries = countriesCard(country);
         refs.cardContainer.innerHTML = countries;
     }
-if (country.langth >= 10) {
-        return onShowAlert(showAlert);
-    }
+
     
 }
 
 function onFetchError(error) {
-    showError('Такой страны не существует')
+    showAlert('This country not found')
 }
-function onShowAlert(alert) {
-    showAlert('Too many matches found. Please enter a more specific query!')
-}
+// function onShowAlert(alert) {
+//     showAlert('Too many matches found. Please enter a more specific query!')
+// }
 
 
 // const debounceInput = debounce(onSearch, 2000);
