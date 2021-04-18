@@ -1,4 +1,4 @@
-import { info } from "@pnotify/core";
+import { info, error } from "@pnotify/core";
 import "@pnotify/core/dist/PNotify.css";
 import "@pnotify/core/dist/BrightTheme.css";
 import * as Confirm from "@pnotify/confirm";
@@ -28,4 +28,29 @@ function showAlert(text) {
     ])
   });
 }
-export default showAlert;
+
+function showError(text) {
+     error({
+    title: "Error",
+    text:
+      `${text}`,
+    modules: new Map([
+      [
+        Confirm,
+        {
+          confirm: true,
+          buttons: [
+            {
+              text: "Ok",
+              primary: true,
+              click: notice => {
+                notice.close(500);
+              }
+            }
+          ]
+        }
+      ]
+    ])
+  });
+}
+export { showAlert, showError };

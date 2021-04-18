@@ -4,7 +4,7 @@ import countriesCard from './templates/countries-card.hbs';
 import countriesList from './templates/countries-list.hbs';
 import getRefs from './js/get-refs';
 import debounce from 'lodash.debounce';
-import showAlert from './js/pnotify';
+import { showAlert, showError } from './js/pnotify';
 // const debounce = require('lodash.debounce');
 const refs = getRefs();
 
@@ -53,7 +53,7 @@ function renderCountryCard(country) {
 }
 
 function onFetchError(error) {
-    showAlert('This country not found')
+    showError('This country not found')
 }
 // function onShowAlert(alert) {
 //     showAlert('Too many matches found. Please enter a more specific query!')
