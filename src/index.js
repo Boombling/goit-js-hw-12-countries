@@ -4,6 +4,7 @@ import countriesCard from './templates/countries-card.hbs';
 import countriesList from './templates/countries-list.hbs';
 import getRefs from './js/get-refs';
 import debounce from 'lodash.debounce';
+import { showAlert, showError } from './js/pnotify';
 // const debounce = require('lodash.debounce');
 const refs = getRefs();
 
@@ -14,39 +15,48 @@ function fetchCountris(name) {
     
     return fetch(`https://restcountries.eu/rest/v2/name/${name}`)
         .then(response => {
-        if(!response.ok){
-            return onFetchError();
-        }
-            return response.json();
-        })
+            if (!response.ok) {
+                return onFetchError(error);
+            } else {
+                return response.json();
+            }
+        });
 }
 
 function onSearch(e) {
     e.preventDefault();
 
     const searchQuery = refs.searchRef.value;
-    // debounceInput(searchQuery)
     fetchCountris(searchQuery)
         .then(renderCountryCard)
         .catch(onFetchError)
-        .finally(() => form.reset());
+        .finally(() => refs.searchRef.value ='');
 }
 
 function renderCountryCard(country) {
     
+
     if (country.length > 1) {
         const countries = countriesList(country);
-        refs.cardContainer.innerHTML = countries;
+        refs.cardContainer.innerHTML = countries;    
+    
     }
-    else {
-        
+    else {        
         const countries = countriesCard(country);
         refs.cardContainer.innerHTML = countries;
     }
+if (country.langth >= 10) {
+        return onShowAlert(showAlert);
+    }
+    
 }
 
 function onFetchError(error) {
-    console.log('ERROR страна не найдена')
+    showError('Такой страны не существует')
 }
+function onShowAlert(alert) {
+    showAlert('Too many matches found. Please enter a more specific query!')
+}
+
 
 // const debounceInput = debounce(onSearch, 2000);

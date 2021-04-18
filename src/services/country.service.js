@@ -1,4 +1,4 @@
-const BASE_URL = 'https://restcountries.eu';
+// const BASE_URL = 'https://restcountries.eu';
 
 
 // export default {
@@ -15,15 +15,15 @@ const BASE_URL = 'https://restcountries.eu';
 // }
 
 
-function fetchCountris(name) {
+// function fetchCountris(name) {
     
-    return fetch(`${BASE_URL}/rest/v2/name/${name}`)
-        .then(response => {
-        if(!response.ok){
-            return onFetchError();
-        }
-            return response.json();
-        })
-}
+//     return fetch(`${BASE_URL}/rest/v2/name/${name}`)
+//         .then(response => {
+//         if(!response.ok){
+//             return onFetchError();
+//         }
+//             return response.json();
+//         })
+// }
 
-export default { fetchCountris };
+// export default { fetchCountris };
